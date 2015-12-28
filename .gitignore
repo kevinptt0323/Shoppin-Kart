@@ -1,5 +1,14 @@
+# Laravel5.gitignore
 /vendor
 /node_modules
 Homestead.yaml
 Homestead.json
 .env
+
+# vim.gitignore
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*~
