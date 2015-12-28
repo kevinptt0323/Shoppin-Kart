@@ -1,2 +1,2 @@
-# Shoppin-Kart
+# iKart
 An online shopping cart template
