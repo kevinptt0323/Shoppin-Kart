@@ -50,7 +50,7 @@ class GoodController extends Controller
 	 */
 	public function show($id)
 	{
-		//
+		return Response::json(Good::find($id), 200);
 	}
 
 	/**
