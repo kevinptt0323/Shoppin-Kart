@@ -18,7 +18,8 @@ class GoodController extends Controller
 	 */
 	public function index()
 	{
-		return Response::json(Good::all(), 200);
+		$goods = Good::getGoods();
+		return Response::json($goods, 200)->header('Cache-Control', 'max-age=900');
 	}
 
 	/**
