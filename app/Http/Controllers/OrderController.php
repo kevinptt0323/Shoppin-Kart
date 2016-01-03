@@ -47,7 +47,7 @@ class OrderController extends Controller
 			'inputData.studentID' => 'required',
 			'inputData.phone' => 'required',
 			'inputData.email' => 'required',
-			'list' => 'required|array|each_exists:id,childObj'
+			'list' => 'required|array|each_exists:id'
 		];
 		$messages = [
 			'required' => '欄位不可為空白',
@@ -56,10 +56,21 @@ class OrderController extends Controller
 		$validator = Validator::make($data, $rules, $messages);
 
 		if ($validator->passes()) {
-			return Response::json([
-				'message' => '下單成功',
-				'data' => [ 'id' => 1 ]
-			]);
+			$ret = Order::createOrder($data);
+			if ($ret) {
+				return Response::json([
+					'message' => '下單成功',
+					'data' => [
+						'id' => $ret->id,
+						'total' => $ret->total,
+					]
+				]);
+			} else {
+				return Response::json([
+					'message' => '驗證錯誤',
+					'data' => '未知的錯誤'
+				], 400);
+			}
 		} else {
 			return Response::json([
 				'message' => '驗證錯誤',
