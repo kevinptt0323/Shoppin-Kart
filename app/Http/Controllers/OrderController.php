@@ -144,6 +144,13 @@ class OrderController extends Controller
 
 	public function updateAction($id, Request $req) {
 		$data = $req->all();
+		if ($data['action']=="delete") {
+			Order::destroy($data['id']);
+			return Response::json([
+			'message' => 'OK',
+			'data' => []
+			], 200);
+		}
 		$order = Order::find($data['id']);
 		$date = new Carbon();
 		if ($data['action']=="paid") {
