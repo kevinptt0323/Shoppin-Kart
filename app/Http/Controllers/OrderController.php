@@ -20,7 +20,12 @@ class OrderController extends Controller
 	 */
 	public function index()
 	{
-		//
+		if (1) {
+			return Response::json([
+				'message' => 'OK',
+				'data' => Order::all()
+			], 200);
+		}
 	}
 
 	/**
@@ -87,7 +92,19 @@ class OrderController extends Controller
 	 */
 	public function show($id)
 	{
-		//
+		$ret = Order::find($id);
+		if ($ret) {
+			$ret->soldGoods;
+			return Response::json([
+				'message' => 'OK',
+				'data' => $ret
+			], 200);
+		} else {
+			return Response::json([
+				'message' => 'Not Found',
+				'data' => []
+			], 404);
+		}
 	}
 
 	/**
