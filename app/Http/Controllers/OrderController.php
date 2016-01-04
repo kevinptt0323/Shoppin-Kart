@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 use Response;
 use Validator;
@@ -139,5 +140,22 @@ class OrderController extends Controller
 	public function destroy($id)
 	{
 		//
+	}
+
+	public function updateAction($id, Request $req) {
+		$data = $req->all();
+		$order = Order::find($data['id']);
+		$date = new Carbon();
+		if ($data['action']=="paid") {
+			$order->paid_at = $date->toDateTimeString();
+		}
+		if ($data['action']=="picked") {
+			$order->picked_at = $date->toDateTimeString();
+		}
+		$order->save();
+		return Response::json([
+			'message' => 'OK',
+			'data' => $order
+		], 200);
 	}
 }

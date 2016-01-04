@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use App\Good;
 use App\SoldGood;
 use App\SoldGoodType;
+use Carbon\Carbon;
 
 class Order extends Model {
 	protected $table = "orders";
+	public $timestamps = false;
 	public static function createOrder(array $data) {
 		$order = new Order;
 
@@ -19,6 +21,7 @@ class Order extends Model {
 			$order->phone = $data['inputData']['phone'];
 			$order->email = $data['inputData']['email'];
 			$order->total = Order::getPrice($data['list']);
+			$order->created_at = Carbon::now()->toDateTimeString();
 			$order->save();
 
 			$goodList = Order::getList($data['list']);
