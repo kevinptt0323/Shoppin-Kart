@@ -73,6 +73,22 @@ class Order extends Model {
 		return $ret;
 	}
 
+	public static function getOrder($id) {
+		$ret = Order::find($id);
+		if ($ret)
+			$ret->getDetail();
+		return $ret;
+	}
+
+	public function getDetail() {
+		foreach($this->goods as &$soldGood) {
+			$soldGood->good;
+			foreach($soldGood->types as &$type) {
+				$type->type;
+			}
+		}
+	}
+
 	public function goods() {
 		return $this->hasMany('App\SoldGood', 'oid');
 	}

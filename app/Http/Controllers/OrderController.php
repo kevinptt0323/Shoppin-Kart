@@ -23,6 +23,9 @@ class OrderController extends Controller
 	{
 		if (1) {
 			$orders = Order::all();
+			foreach($orders as &$order)
+				$order->getDetail();
+
 			return Response::json([
 				'message' => 'OK',
 				'data' => $orders
@@ -94,15 +97,8 @@ class OrderController extends Controller
 	 */
 	public function show($id)
 	{
-		$ret = Order::find($id);
+		$ret = Order::getOrder($id);
 		if ($ret) {
-			foreach($ret->goods as &$soldGood) {
-				$soldGood->good;
-				foreach($soldGood->types as &$type) {
-					$type->type;
-				}
-			}
-
 			return Response::json([
 				'message' => 'OK',
 				'data' => $ret
