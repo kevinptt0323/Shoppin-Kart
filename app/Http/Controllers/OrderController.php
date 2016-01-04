@@ -22,7 +22,7 @@ class OrderController extends Controller
 	public function index()
 	{
 		if (1) {
-			$orders = Order::all();
+			$orders = Order::whereNull('deleted_at')->get();
 			foreach($orders as &$order)
 				$order->getDetail();
 
@@ -147,13 +147,13 @@ class OrderController extends Controller
 
 	public function updateAction($id, Request $req) {
 		$data = $req->all();
-		if ($data['action']=="delete") {
+		/*if ($data['action']=="delete") {
 			Order::destroy($data['id']);
 			return Response::json([
 			'message' => 'OK',
 			'data' => []
 			], 200);
-		}
+		}*/
 		$order = Order::find($data['id']);
 		$date = new Carbon();
 		if ($data['action']=="paid") {
@@ -161,6 +161,9 @@ class OrderController extends Controller
 		}
 		if ($data['action']=="picked") {
 			$order->picked_at = $date->toDateTimeString();
+		}
+		if ($data['action']=="delete") {
+			$order->deleted_at = $date->toDateTimeString();
 		}
 		$order->save();
 		return Response::json([
