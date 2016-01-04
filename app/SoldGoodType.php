@@ -8,10 +8,9 @@ class SoldGoodType extends Model {
 	protected $table = "sold-good-types";
 	public $timestamps = false;
 
-	public function sgid() {
-		return $this->belongsTo('SoldGood');
+	public function type() {
+		return $this->hasOne('App\GoodType', 'id', 'tid')->select(['name']);
 	}
-	public function tid() {
-		return $this->belongsTo('GoodType');
-	}
+
+	protected $hidden = ['id', 'sgid', 'tid'];
 }

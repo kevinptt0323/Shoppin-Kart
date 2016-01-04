@@ -29,7 +29,7 @@ class Order extends Model {
 			foreach($goodList as $obj) {
 				$soldGood = new SoldGood;
 				$soldGood->gid = $obj['id'];
-				$order->soldGoods()->save($soldGood);
+				$order->goods()->save($soldGood);
 				$soldGoodTypes = [];
 				foreach ($obj['typeSelected'] as $tid) {
 					$soldGoodType = new SoldGoodType;
@@ -73,7 +73,7 @@ class Order extends Model {
 		return $ret;
 	}
 
-	public function soldGoods() {
+	public function goods() {
 		return $this->hasMany('App\SoldGood', 'oid');
 	}
 

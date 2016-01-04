@@ -22,9 +22,10 @@ class OrderController extends Controller
 	public function index()
 	{
 		if (1) {
+			$orders = Order::all();
 			return Response::json([
 				'message' => 'OK',
-				'data' => Order::all()
+				'data' => $orders
 			], 200);
 		}
 	}
@@ -95,7 +96,13 @@ class OrderController extends Controller
 	{
 		$ret = Order::find($id);
 		if ($ret) {
-			$ret->soldGoods;
+			foreach($ret->goods as &$soldGood) {
+				$soldGood->good;
+				foreach($soldGood->types as &$type) {
+					$type->type;
+				}
+			}
+
 			return Response::json([
 				'message' => 'OK',
 				'data' => $ret
