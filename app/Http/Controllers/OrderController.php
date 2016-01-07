@@ -162,10 +162,11 @@ class OrderController extends Controller
 		if ($data['action']=="picked") {
 			$order->picked_at = $date->toDateTimeString();
 		}
-		if ($data['action']=="delete") {
+		if ($data['action']=="deleted") {
 			$order->deleted_at = $date->toDateTimeString();
 		}
 		$order->save();
+		$order->getDetail();
 		return Response::json([
 			'message' => 'OK',
 			'data' => $order
