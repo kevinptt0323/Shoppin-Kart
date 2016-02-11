@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use Input;
+use Response;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,14 +19,11 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->guest()) {
-            if ($request->ajax()) {
-                return response('Unauthorized.', 401);
-            } else {
-                return redirect()->guest('login');
-            }
+        $token = $request->input('token');
+        if ($token!='juvdopij348fghkln2345jklfhm12') {
+            return Response::json([], 401);
+        } else {
+            return $next($request);
         }
-
-        return $next($request);
     }
 }

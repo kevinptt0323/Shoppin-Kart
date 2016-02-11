@@ -14,6 +14,9 @@ use App\Order;
 
 class OrderController extends Controller
 {
+	public function __construct() {
+		$this->middleware('auth', ['except' => ['store']]);
+	}
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -21,16 +24,14 @@ class OrderController extends Controller
 	 */
 	public function index()
 	{
-		if (1) {
-			$orders = Order::whereNull('deleted_at')->get();
-			foreach($orders as &$order)
-				$order->getDetail();
+		$orders = Order::whereNull('deleted_at')->get();
+		foreach($orders as &$order)
+			$order->getDetail();
 
-			return Response::json([
-				'message' => 'OK',
-				'data' => $orders
-			], 200);
-		}
+		return Response::json([
+			'message' => 'OK',
+			'data' => $orders
+		], 200);
 	}
 
 	/**

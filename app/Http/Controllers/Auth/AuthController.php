@@ -7,6 +7,8 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use \Response;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -68,5 +70,15 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+    public function login(Request $request) {
+        $data = $request->all();
+        if (isset($data['password']) && $data['password']== 'meichu_ZOOb')
+            return Response::json([
+                'token' => 'juvdopij348fghkln2345jklfhm12'
+            ], 200);
+        else
+            return Response::json([
+            ], 400);
     }
 }
